@@ -2,13 +2,13 @@
 from cms.toolbar_pool import toolbar_pool
 from cms.extensions.toolbar import ExtensionToolbar
 from django.utils.translation import ugettext_lazy as _
-from .models import djuPageExtension
+from .models import DjuPageThumbnail
 
 
 @toolbar_pool.register
-class djuPageExtensionToolbar(ExtensionToolbar):
+class DjuPageThumbnailToolbar(ExtensionToolbar):
     # defines the model for the current toolbar
-    model = djuPageExtension
+    model = DjuPageThumbnail
 
     def populate(self):
         # setup the extension toolbar with permissions and sanity checks

@@ -4,8 +4,8 @@ from cms.extensions import PageExtension
 from cms.extensions.extension_pool import extension_pool
 
 
-class djuPageExtension(PageExtension):
+class DjuPageThumbnail(PageExtension):
     image = models.ImageField(upload_to='pageimages', blank=True)
 
 
-extension_pool.register(djuPageExtension)
+extension_pool.register(DjuPageThumbnail)

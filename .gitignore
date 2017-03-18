@@ -1,0 +1,13 @@
+*~
+\#*\#
+.\#*
+*.pyc
+/env
+/staticpaths
+/env3
+Z
+_build
+.DS_Store
+._.DS_Store
+.idea
+._*

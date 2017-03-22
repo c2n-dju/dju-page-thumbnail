@@ -28,10 +28,10 @@ class ShowPagesAroundPage(InclusionTag):
     give the one level deep neighbour of a page
     """
     name='dju_show_pages_around_page'
-    template = 'dju_show_pages_around_page.html'
+    template = 'dju_page_thumbnail/dju_show_pages_around_page.html'
     
     options = Options(
-        StringArgument('template', default='dju_show_pages_around_page.html', required=False),
+        StringArgument('template', default='dju_page_thumbnail/dju_show_pages_around_page.html', required=False),
     )
     
     def get_context(self,context,template):

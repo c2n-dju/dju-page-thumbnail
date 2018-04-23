@@ -22,7 +22,7 @@ from cms.utils.conf import get_cms_setting
 import re
 from django.utils.six import string_types
 from django.utils import six
-from cms.utils.page_resolver import get_page_queryset
+# from cms.utils.page_resolver import get_page_queryset
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.conf import settings
 
@@ -212,6 +212,7 @@ class dju_SoftRoot(AsTag):
 register.tag(dju_SoftRoot)
 
 
+"""
 class dju_SoftRootPage(AsTag):
     name = 'dju_soft_root_page'
 
@@ -270,7 +271,7 @@ class dju_SoftRootPage(AsTag):
 
 
 register.tag(dju_SoftRootPage)
-
+"""
 
 class ShowMenu(InclusionTag):
     """

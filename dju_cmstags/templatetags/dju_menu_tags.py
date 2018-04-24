@@ -201,11 +201,14 @@ class dju_SoftRoot(AsTag):
         namespace = None
         root_id = None
 
+        
+        menu_renderer = context.get('cms_menu_renderer')
+        if not menu_renderer:
+            menu_renderer = menu_pool.get_renderer(request)
         if type == "title":
-
-            return menu_pool.get_nodes(request, namespace, root_id)[0].get_menu_title()
+            return menu_renderer.get_nodes(request, namespace, root_id)[0].get_menu_title()
         elif type == "url":
-            return menu_pool.get_nodes(request, namespace, root_id)[0].get_absolute_url()
+            return menu_renderer.get_nodes(request, namespace, root_id)[0].get_absolute_url()
         else: 
             return "UNKNOWN"
 
@@ -309,14 +312,17 @@ class ShowMenu(InclusionTag):
         activeul=''
         activehref=''
 
+        menu_renderer = context.get('cms_menu_renderer')
+        if not menu_renderer:
+            menu_renderer = menu_pool.get_renderer(request)
+
         if next_page:
             children = next_page.children
-        
         else:
             # new menu... get all the data so we can save a lot of queries
-            nodes = menu_pool.get_nodes(request, namespace, root_id)
+            nodes = menu_renderer.get_nodes(request, namespace, root_id)
             if root_id: # find the root id and cut the nodes
-                id_nodes = menu_pool.get_nodes_by_attribute(nodes, "reverse_id", root_id)
+                id_nodes = menu_renderer.get_nodes_by_attribute(nodes, "reverse_id", root_id)
                 if id_nodes:
                     node = id_nodes[0]
                     nodes = node.children
@@ -328,7 +334,7 @@ class ShowMenu(InclusionTag):
                 else:
                     nodes = []
 
-        nodes = menu_pool.get_nodes(request, namespace, root_id)
+        nodes = menu_renderer.get_nodes(request, namespace, root_id)
 
         isleafnode=False
         for n in nodes:
@@ -430,9 +436,12 @@ class ShowMenuArround(InclusionTag):
         except KeyError:
             return {'template': 'menu/empty.html'}
 
+        menu_renderer = context.get('cms_menu_renderer')
+        if not menu_renderer:
+            menu_renderer = menu_pool.get_renderer(request)
         if next_page: 
             # getting the nodel level
-            nodes = menu_pool.get_nodes(request, namespace, root_id)
+            nodes = menu_renderer.get_nodes(request, namespace, root_id)
             for n in nodes:
                 if  n.selected:
                     level=n.level
@@ -449,7 +458,7 @@ class ShowMenuArround(InclusionTag):
                     children.append(n)
                       
         else:
-            nodes = menu_pool.get_nodes(request, namespace, root_id)
+            nodes = menu_renderer.get_nodes(request, namespace, root_id)
             # we find the closest ancestor (that is the one with the highest level but in fact 
             # it looks like the nodes are scanned from the top to bottom that is the lowest to the highest.
             for n in nodes:

@@ -9,7 +9,6 @@ from django import template
 from django.contrib.sites.models import Site
 from django.urls import reverse, NoReverseMatch
 from django.utils.encoding import force_text
-from django.utils.six.moves.urllib.parse import unquote
 from django.utils.translation import get_language, ugettext
 from menus.menu_pool import menu_pool
 from menus.utils import DefaultLanguageChanger
@@ -20,8 +19,7 @@ from cms.models import Page, Placeholder as PlaceholderModel, CMSPlugin, StaticP
 from cms.utils import get_language_from_request, get_site_id
 from cms.utils.conf import get_cms_setting
 import re
-from django.utils.six import string_types
-from django.utils import six
+from six import string_types, integer_types
 # from cms.utils.page_resolver import get_page_queryset
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.conf import settings
@@ -58,9 +56,9 @@ def _get_page_by_untyped_arg(page_lookup, request, site_id):
         if request.current_page and request.current_page.pk == page_lookup.pk:
             return request.current_page
         return page_lookup
-    if isinstance(page_lookup, six.string_types):
+    if isinstance(page_lookup, string_types):
         page_lookup = {'reverse_id': page_lookup}
-    elif isinstance(page_lookup, six.integer_types):
+    elif isinstance(page_lookup, integer_types):
         page_lookup = {'pk': page_lookup}
     elif not isinstance(page_lookup, dict):
         raise TypeError('The page_lookup argument can be either a Dictionary, Integer, Page, or String.')
